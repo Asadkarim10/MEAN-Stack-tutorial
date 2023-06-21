@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { recipeList } from "./data"
+import {RecipeItem} from "./RecipeItem"
 
 export const RecipeDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
   const recipe = recipeList[id - 1]
+  const otherrecipes = recipeList.filter((element) => element.id !== recipe.id)
 
   return (
     <div>
@@ -45,17 +47,20 @@ export const RecipeDetails = () => {
         <div>
           <h1 className="text-4xl mt-8 mb-8">Instructions</h1>
           <ul
-            style={{
-              textAlign: "justify"
-            }}
-            className="list-none list-inside"
-          >
+            style={{textAlign: "justify"
+            }}className="list-none list-inside">
             {recipe.instructions.map((instruction, index) => (
               <li key={index}>{instruction}</li>
             ))}
           </ul>
         </div>
+        </div>
+        <h2>Another Item</h2>
+        <div className="grid grid-rows-1 grid-cols-3 gap-4">
+          {otherrecipes.map((otherrecipes,index) =>(
+          <RecipeItem key = {index} recipe={otherrecipes}/>))}
       </div>
     </div>
+  
   )
 }
